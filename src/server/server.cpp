@@ -1,16 +1,43 @@
-#include<iostream>
+#include <bits/stdc++.h>
 #include <netinet/in.h>
-#include<sys/socket.h>
 #include<unistd.h>
+#include<thread>
+#include<sys/socket.h>
 #include<string.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <string.h>
 #define PORT 2323
 #define maxQue 20
 using namespace std;
+struct threads{
+    int id;
+    string name;
+    int socket;
+    thread thr;
+};
+vector<threads> clients;
+int server_fd;//server
+
+void handleClient(int clientSocket, int id){
+    while(1){
+		// int recvMes=read(new_socket,recv_message,1024);
+		// if (recvMes>0){
+        //     cout<<recv_message<<endl;
+		// }
+        
+		char mes[50]="hello" ;
+		int sendMes=send(server_fd,mes,1024,0);
+		if (sendMes>0){
+            cout<<"sent"<<endl;
+		}
+	}
+}
+
 int main()
 {
-	int server_fd;//server
 	int new_socket;//client
-	int valread;
+    int count=0;
     struct sockaddr_in address;//{contains AF_INET(internet protocal), Address port }
     int opt = 1;
     int addrlen = sizeof(address);//size of the address socket
@@ -43,28 +70,24 @@ int main()
         perror("listen");
         exit(EXIT_FAILURE);
     }
-    if ((new_socket
-         = accept(server_fd, (struct sockaddr*)&address,
-                  (socklen_t*)&addrlen))
-        < 0) {
-        perror("accept");
-        exit(EXIT_FAILURE);
+    struct sockaddr_in client_addr;//{contains AF_INET(internet protocal), Address port }
+    while (1){
+        if ((new_socket
+            = accept(server_fd, (struct sockaddr*)&address,
+                    (socklen_t*)&addrlen))
+            < 0) {
+            perror("accept");
+            exit(EXIT_FAILURE);
+        }
+        else{
+            cout<<"commingg"<<address.sin_addr.s_addr<<endl;
+            count++;
+            thread t;
+            t=handleClient(new_socket,count);
+            clients.push_back({count,string("NONAME"),new_socket,(move(t))});
+        }   
     }
-	else
-	{
-		cout<<"connected"<<endl;
-	}
-	while(1){
-		int recvMes=recv(server_fd,recv_message,1024,0);
-		if (recvMes>0){
-
-		}
-		char mes[50]="hello" ;
-		int sendMes=send(server_fd,mes,1024,0);
-		if (sendMes>0){
-
-		}
-	}
+	
 
 
     // closing the connected socket
@@ -73,4 +96,5 @@ int main()
     shutdown(server_fd, SHUT_RDWR);
     return 0;
 }
+
 
