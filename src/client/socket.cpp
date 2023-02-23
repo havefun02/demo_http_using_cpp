@@ -34,25 +34,21 @@ void Socket::Connect(){
 }
 
 Socket::~Socket(){
+    close(fd);
     close(_socket);
 }
 
-int Socket::Receive(){
-    int fd=open("/home/lapphan/Project1/src/client/abc.txt",O_RDWR);
-    int res=recv(_socket,recv_message,sizeof(recv_message),0);
+long Socket::Receive(){
+    char recv_message[1024]={0};
+    int res=recv(_socket,recv_message,1024,0);
     if (res<=0){
         perror("Receive");
         exit(EXIT_FAILURE);
     }
     else{
         string tmp=string(recv_message);
-        cout<<tmp.substr(tmp.find("Content-Length: "),30);
         write(fd,recv_message,sizeof(recv_message));
-	cout<<tmp<<endl;
-        //do something
     }
-    close(fd);
-
     return res;
 }
 int Socket::Send(string rbuf){
@@ -66,5 +62,10 @@ int Socket::Send(string rbuf){
     }
     return res;
 }
+void Socket::setSum(long t){
+    sum+=t;
+}
 
-
+long Socket::getSum(){
+    return sum;
+}

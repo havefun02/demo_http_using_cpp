@@ -12,16 +12,19 @@ class Socket
 {
 private:
     int _socket;
+    int sum=0;
     struct hostent *host;
     int PORT=80;
     struct sockaddr_in address;
-    char recv_message[4080] = { 0 };
     int opt=1;
+    int fd=open("/home/lapphan/Project1/src/client/bcd.txt",O_RDWR | (O_APPEND |O_CREAT) ,S_IRWXU);
 public:
     const char* url="www.example.com";
 	Socket();
     ~Socket();
 	void Connect();
-	int Receive();
+	void setSum(long t);
+	long getSum();
+	long Receive();
 	int Send(string rbuf);
 };
