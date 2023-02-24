@@ -6,7 +6,7 @@ int main(){
     while(1){
         long t=client_socket->Receive();
         client_socket->setSum(t);
-        cout<<client_socket->getSum()<<endl;
+        cout<<client_socket->getSum();
     }
     return 1;
 }

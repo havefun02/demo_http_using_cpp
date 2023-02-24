@@ -19,7 +19,7 @@ private:
     int opt=1;
     int fd=open("/home/lapphan/Project1/src/client/bcd.txt",O_RDWR | (O_APPEND |O_CREAT) ,S_IRWXU);
 public:
-    const char* url="www.example.com";
+    const char* url="www.bing.com";
 	Socket();
     ~Socket();
 	void Connect();

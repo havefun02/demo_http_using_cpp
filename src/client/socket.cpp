@@ -46,8 +46,10 @@ long Socket::Receive(){
         exit(EXIT_FAILURE);
     }
     else{
+        cout<<recv_message;
+        cout<<res<<endl;
         string tmp=string(recv_message);
-        write(fd,recv_message,sizeof(recv_message));
+        write(fd,recv_message,res);
     }
     return res;
 }
