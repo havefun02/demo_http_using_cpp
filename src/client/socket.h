@@ -17,10 +17,10 @@ private:
     int PORT=80;
     struct sockaddr_in address;
     int opt=1;
-    int fd=open("/home/lapphan/Project1/src/client/bcd.txt",O_RDWR | (O_APPEND |O_CREAT) ,S_IRWXU);
+    int fd=0;
 public:
-    const char* url="www.bing.com";
-	Socket();
+    string url;
+	Socket(string nameFIle,string link);
     ~Socket();
 	void Connect();
 	void setSum(long t);

@@ -1,10 +1,19 @@
 #include"socket.h"
-Socket::Socket(){
+Socket::Socket(string nameFIle,string link){
+    url=link;
+    string tmp="/home/lapphan/Project1/src/client/";
+    string path((tmp)+(nameFIle));
+    cout<<" "<<path;
+    fd=open(path.c_str(),O_RDWR | (O_APPEND |O_CREAT) ,S_IRWXU);
+    if (fd<0) {
+        perror("socket failed");
+        exit(EXIT_FAILURE);
+    }
     Connect();
 }
 void Socket::Connect(){
     int status;
-	host=gethostbyname(url);
+	host=gethostbyname(url.c_str());
     int addrlen = sizeof(address);
     if ((_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("socket failed");
@@ -34,6 +43,7 @@ void Socket::Connect(){
 }
 
 Socket::~Socket(){
+
     close(fd);
     close(_socket);
 }
