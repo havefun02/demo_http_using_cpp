@@ -1,6 +1,4 @@
 #include"socket.h"
-#include <map>
-#include<string.h>
 string getHeader(unsigned int fd);
 int findIndexDBRN(string str);
 map<string,string> Extract(int s,int e,string mystring);
@@ -40,7 +38,8 @@ int main(int argc, char**argv){
         }
     }
     Socket *client_socket=new Socket(arg[1],tmp);
-    string get_http = "GET /"+FinalPath+" HTTP/1.1\r\nHost: " + string(client_socket->url) + "\r\nConnection: close\r\n\r\n";
+    string get_http = "GET /"+FinalPath+" HTTP/1.1\r\nHost: " + 
+    string(client_socket->url) + "\r\nConnection: close\r\n\r\n";
     client_socket->Send(get_http);
     while(1){
         long t=client_socket->Receive();
@@ -48,8 +47,8 @@ int main(int argc, char**argv){
         client_socket->setSum(t);
     }
     string ASTRING=getHeader(client_socket->fd_tmp[0]);
+    cout<<ASTRING;
     int end=ASTRING.length();
-    cout<<ASTRING<<endl;
     map<string,string> arr=Extract(0,end,ASTRING.substr(0,end));
     map<std::string, string>::iterator it = arr.begin();
     // while (it != arr.end())
@@ -60,7 +59,8 @@ int main(int argc, char**argv){
     string len=(getContentLength(arr));
     if (len==""){
         if (compare2String(FindTypeTransfer(arr),"chunked")){
-            writeFileChunked(client_socket->fd_tmp[0],client_socket->fd_res,end,atoi(len.c_str()));
+            writeFileChunked(client_socket->fd_tmp[0],client_socket->fd_res
+            ,end,atoi(len.c_str()));
         }
         else{
             cout<<"other type"<<endl;

@@ -11,10 +11,6 @@ $(OUT)20127547_20127261:$(OBJ_FILES)
 	$(CXX)	$(LFLAGS) -ggdb3 -O0 -pedantic-errors -std=c++11 -Wall -Wextra -o	$@ $^
 $(SRC_PATH)%.o:$(SRC_PATH)%.cpp $(SRC_PATH)%.h
 	$(CXX)	$(CFLAGS) $< -o $@
-# clean:
-# 	rm edit	src/main.o
-# 	rm edit	src/socket.o
-# 	rm edit -fr $(OUTPUT)20127547_20127261
 cleanall: cleanobj
 	rm edit $(OUTPUT)20127547_20127261
 

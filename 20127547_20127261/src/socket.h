@@ -1,5 +1,5 @@
 #include<iostream>
-#include <netinet/in.h>
+#include<netinet/in.h>
 #include<sys/socket.h>
 #include<unistd.h>
 #include<string.h>
@@ -9,6 +9,8 @@
 #include<sys/stat.h>
 #include <math.h> 
 #include <arpa/inet.h>
+#include <map>
+#include<string.h>
 using namespace std;
 class Socket
 {
